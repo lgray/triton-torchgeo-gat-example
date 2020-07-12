@@ -6,6 +6,9 @@ docker build -t local/gat_test_client -f Dockerfile.client .
 # build necessary libraries and train the example model
 docker build -t local/gat_test_server -f Dockerfile.build .
 
+# build container for running locally
+docker build -t local/gat_local_test -f Dockerfile.local .
+
 docker run -d --name triton_server_temp \
        --shm-size=1g --ulimit memlock=-1 \
        --ulimit stack=67108864 \
