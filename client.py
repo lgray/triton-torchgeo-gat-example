@@ -62,6 +62,9 @@ if __name__ == '__main__':
 
     model_name = FLAGS.model_name 
 
+    mconf = triton_client.get_model_config(model_name, as_json=True)
+    print('config:\n', mconf)
+    
     for i in range(50):
         # Infer
         inputs = []
@@ -70,8 +73,8 @@ if __name__ == '__main__':
         nnodes = random.randint(100, 4000)
         nedges = random.randint(8000, 15000)
 
-        inputs.append(tritongrpcclient.InferInput('x__0', [1, nnodes, 1433], 'FP32'))
-        inputs.append(tritongrpcclient.InferInput('edgeindex__1', [1, 2, nedges], "INT64"))
+        inputs.append(tritongrpcclient.InferInput('x__0', [nnodes, 1433], 'FP32'))
+        inputs.append(tritongrpcclient.InferInput('edgeindex__1', [2, nedges], "INT64"))
 
         x = np.random.normal(-10, 4, (nnodes, 1433)).astype(np.float32)
         x[x < 0] = 0.
@@ -82,8 +85,8 @@ if __name__ == '__main__':
         print(edge_index.shape)
 
         # prepare inputs
-        inputs[0].set_data_from_numpy(x[None])
-        inputs[1].set_data_from_numpy(edge_index[None])
+        inputs[0].set_data_from_numpy(x)
+        inputs[1].set_data_from_numpy(edge_index)
 
         # prepare outputs
         outputs.append(tritongrpcclient.InferRequestedOutput('logits__0'))

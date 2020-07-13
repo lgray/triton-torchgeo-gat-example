@@ -1,6 +1,6 @@
 name: "gat_test"
 platform: "pytorch_libtorch"
-max_batch_size: 8
+max_batch_size: 0
 input [
   {
     name: "x__0"
