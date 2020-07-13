@@ -10,7 +10,7 @@ docker run -d --name gat_test_server \
        -v`pwd`/models:/models \
        -e LD_PRELOAD="libpyg/libtorchscatter.so libpyg/libtorchsparse.so" \
        local/gat_test_server:latest \
-       tritonserver --model-repository=/models --log-verbose=1 --log-error=1 --log-info=1 --strict-model-config=false
+       tritonserver --model-repository=/models
 
 sleep 2
 
