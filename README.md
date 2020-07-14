@@ -36,7 +36,7 @@ Use:
 
 # How to substitute in your own model:
 (assuming your model training is separate from container generation)
-1) Train your model and then save it using TorchScript's jit. See [here](https://pytorch-geometric.readthedocs.io/en/latest/notes/jit.html) for details on how to tweak your Pytorch-Geometric model for torch scripting.
+1) Train your model and then save it using TorchScript's jit. See [here](https://pytorch-geometric.readthedocs.io/en/latest/notes/jit.html) for details on how to tweak your Pytorch-Geometric model for torch scripting (it is very easy and backwards compatible with saved weights from previous trainings).
 2) In Dockerfile.build remove the lines:
 ```Dockerfile
 RUN git clone https://github.com/rusty1s/pytorch_geometric.git
