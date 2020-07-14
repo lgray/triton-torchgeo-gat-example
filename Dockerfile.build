@@ -11,7 +11,7 @@ RUN pushd pytorch_cluster &&\
     make -j $(nproc) && mv *.so /workspace/ && popd &&\
     popd
 
-RUN git clone https://github.com/rusty1s/pytorch_scatter.git -b 2.0.5
+RUN git clone https://github.com/lgray/pytorch_scatter.git
 RUN pushd pytorch_scatter &&\
     pip install . &&\
     echo -e "set_property(TARGET torch_cuda PROPERTY INTERFACE_COMPILE_OPTIONS \"\")\nset_property(TARGET torch_cpu PROPERTY INTERFACE_COMPILE_OPTIONS \"\")\n" >> CMakeLists.txt &&\
@@ -29,7 +29,7 @@ RUN pushd pytorch_spline_conv &&\
     make -j $(nproc) && mv *.so /workspace/ && popd &&\
     popd
 
-RUN git clone https://github.com/rusty1s/pytorch_sparse.git
+RUN git clone https://github.com/lgray/pytorch_sparse.git -b add_cmake
 RUN pushd pytorch_sparse &&\
     pip install . &&\
     echo -e "set_property(TARGET torch_cuda PROPERTY INTERFACE_COMPILE_OPTIONS \"\")\nset_property(TARGET torch_cpu PROPERTY INTERFACE_COMPILE_OPTIONS \"\")\n" >> CMakeLists.txt &&\
