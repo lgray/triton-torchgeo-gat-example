@@ -2,8 +2,10 @@
 An example of running a pytorch-geometric graph attention model in nvidia triton.
 
 Requirements:
-- a recent docker installation
-- optionally: nvidia docker runtimes
+- a recent docker installation (https://docs.docker.com/engine/install/)
+- if you want to run the model on a gpu: 
+  - install cuda 11 (https://developer.nvidia.com/cuda-downloads)
+  - install nvidia container runtimes (https://github.com/NVIDIA/nvidia-docker NB: don't install nvidia-docker2!!!!)
 
 Use:
 ```
