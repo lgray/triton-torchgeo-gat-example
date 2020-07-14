@@ -52,7 +52,7 @@ and also remove the line:
 ```Dockerfile
 COPY --from=builder /workspace/model.pt /opt/tritonserver/model.pt
 ```
-3) You'll need to create a "model config" to describe the input and output tensor shapes. You can see an example of this for a pytorch model in this repository's config.pbtxt. You can find more documentation on how to write the model config [here](https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/model_configuration.html).
+3) You'll need to create a "model config" to describe the input and output tensor shapes. You can see an example of this for a pytorch model in this repository's `config.pbtxt`. You can find more documentation on how to write the model config [here](https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/model_configuration.html). Warning - right now GNNs can only use a batch size of zero! This will be fixed in due time.
 4) in build-images.sh you can remove the lines:
 ```bash
 docker run -d --name triton_server_temp \
