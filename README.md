@@ -1,5 +1,5 @@
 # triton-torchgeo-gat-example
-An example of running a pytorch-geometric graph attention model in nvidia triton.
+An example of running a pytorch-geometric graph attention model in [nvidia triton](https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/).
 
 NVIDIA Triton is an engine for running inference as a service, 
 it handles load balancing, model replication, model versioning, and batching.
