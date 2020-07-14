@@ -13,7 +13,7 @@ docker run -d --name gat_test_server \
        local/gat_test_server:latest \
        tritonserver --model-repository=/models
 
-sleep 2
+sleep 45
 
 docker run --name gat_test_client \
        --network gat_test_network \
