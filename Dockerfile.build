@@ -47,7 +47,7 @@ RUN pushd pytorch_geometric/examples/jit &&\
     python gat.py &&\
     mv gat_test.pt /workspace/model.pt
 
-FROM nvcr.io/nvidia/tritonserver:20.06-py3
+FROM nvcr.io/nvidia/tritonserver:20.06-v1-py3
 
 ENV LD_LIBRARY_PATH="/opt/tritonserver/lib/pytorch:${LD_LIBRARY_PATH}"
 

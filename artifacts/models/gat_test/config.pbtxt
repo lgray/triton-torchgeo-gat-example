@@ -1,0 +1,22 @@
+name: "gat_test"
+platform: "pytorch_libtorch"
+max_batch_size: 0
+input [
+  {
+    name: "x__0"
+    data_type: TYPE_FP32
+    dims: [ -1, 1433 ]
+  },
+  {
+    name: "edgeindex__1"
+    data_type: TYPE_INT64
+    dims: [ 2, -1 ]
+  }
+]
+output [
+  {
+    name: "logits__0"
+    data_type: TYPE_FP32
+    dims: [ -1, 7 ]
+  }
+]
