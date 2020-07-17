@@ -13,7 +13,6 @@ RUN pushd pytorch_cluster &&\
 RUN git clone https://github.com/rusty1s/pytorch_scatter.git
 RUN pushd pytorch_scatter &&\
     pip install . &&\
-    echo -e "set_property(TARGET torch_cuda PROPERTY INTERFACE_COMPILE_OPTIONS \"\")\nset_property(TARGET torch_cpu PROPERTY INTERFACE_COMPILE_OPTIONS \"\")\n" >> CMakeLists.txt &&\
     mkdir build && pushd build &&\
     cmake -DCMAKE_PREFIX_PATH=/opt/conda/lib/python3.6/site-packages/torch -DWITH_CUDA=${LIB_WITH_CUDA} .. &&\
     make -j $(nproc) && mv *.so /workspace/ && popd &&\
@@ -22,7 +21,6 @@ RUN pushd pytorch_scatter &&\
 RUN git clone https://github.com/rusty1s/pytorch_spline_conv.git
 RUN pushd pytorch_spline_conv &&\
     pip install . &&\
-    echo -e "set_property(TARGET torch_cuda PROPERTY INTERFACE_COMPILE_OPTIONS \"\")\nset_property(TARGET torch_cpu PROPERTY INTERFACE_COMPILE_OPTIONS \"\")\n" >> CMakeLists.txt &&\
     mkdir build && pushd build &&\
     cmake -DCMAKE_PREFIX_PATH=/opt/conda/lib/python3.6/site-packages/torch -DWITH_CUDA=${LIB_WITH_CUDA} .. &&\
     make -j $(nproc) && mv *.so /workspace/ && popd &&\
@@ -31,7 +29,6 @@ RUN pushd pytorch_spline_conv &&\
 RUN git clone https://github.com/rusty1s/pytorch_sparse.git
 RUN pushd pytorch_sparse &&\
     pip install . &&\
-    echo -e "set_property(TARGET torch_cuda PROPERTY INTERFACE_COMPILE_OPTIONS \"\")\nset_property(TARGET torch_cpu PROPERTY INTERFACE_COMPILE_OPTIONS \"\")\n" >> CMakeLists.txt &&\
     mkdir build && pushd build &&\
     cmake -DCMAKE_PREFIX_PATH=/opt/conda/lib/python3.6/site-packages/torch -DWITH_CUDA=${LIB_WITH_CUDA} .. &&\
     make -j $(nproc) && mv *.so /workspace/ && popd &&\
@@ -43,7 +40,7 @@ RUN pushd pytorch_geometric && pip install -e . && popd
 
 RUN pushd pytorch_geometric/examples/jit &&\
     echo "torch.jit.save(model, 'gat_test.pt')" >> gat.py &&\
-    python gat.py &&\
+    python gat.py >> train.log &&\
     mv gat_test.pt /workspace/model.pt
 
 COPY gat_local_test.py /workspace/

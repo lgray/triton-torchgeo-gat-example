@@ -40,17 +40,15 @@ RUN pushd pytorch_geometric && pip install -e . && popd
 
 RUN pushd pytorch_geometric/examples/jit &&\
     echo "torch.jit.save(model, 'gat_test.pt')" >> gat.py &&\
-    python gat.py &&\
+    python gat.py >> train.log &&\
     mv gat_test.pt /workspace/model.pt
 
-FROM nvcr.io/nvidia/tritonserver:20.06-py3
+FROM alpine:latest
 
-ENV LD_LIBRARY_PATH="/opt/tritonserver/lib/pytorch:${LD_LIBRARY_PATH}"
+RUN mkdir -p /artifacts
 
-RUN mkdir -p /opt/tritonserver/libpyg
-
-COPY --from=builder /workspace/libtorchscatter.so /opt/tritonserver/libpyg
-COPY --from=builder /workspace/libtorchsparse.so /opt/tritonserver/libpyg
-COPY --from=builder /workspace/libtorchcluster.so /opt/tritonserver/libpyg
-COPY --from=builder /workspace/libtorchsplineconv.so /opt/tritonserver/libpyg
-COPY --from=builder /workspace/model.pt /opt/tritonserver/model.pt
+COPY --from=builder /workspace/libtorchscatter.so /artifacts
+COPY --from=builder /workspace/libtorchsparse.so /artifacts
+COPY --from=builder /workspace/libtorchcluster.so /artifacts
+COPY --from=builder /workspace/libtorchsplineconv.so /artifacts
+COPY --from=builder /workspace/model.pt /artifacts/model.pt
