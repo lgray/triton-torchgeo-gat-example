@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # build necessary libraries and train the example model
-docker build -t local/gat_artifacts -f Dockerfile.build -m 8g .
+docker build -t local/gat_artifacts -f Dockerfile.build -m 16g .
 
 # build container for running locally (uncomment if you want it)
 #docker build -t local/gat_local_test -f Dockerfile.local .

@@ -2,12 +2,14 @@ FROM nvcr.io/nvidia/pytorch:20.06-py3 AS builder
 
 ENV FORCE_CUDA=1
 ARG LIB_WITH_CUDA=ON
+ARG NPROC=4
+
 RUN git clone https://github.com/rusty1s/pytorch_cluster.git
 RUN pushd pytorch_cluster &&\
     pip install . &&\
     mkdir build && pushd build &&\
     cmake -DCMAKE_PREFIX_PATH=/opt/conda/lib/python3.6/site-packages/torch -DWITH_CUDA=${LIB_WITH_CUDA} .. &&\
-    make -j $(nproc) && mv *.so /workspace/ && popd &&\
+    make -j ${NPROC} && mv *.so /workspace/ && popd &&\
     popd
 
 RUN git clone https://github.com/rusty1s/pytorch_scatter.git
@@ -15,7 +17,7 @@ RUN pushd pytorch_scatter &&\
     pip install . &&\
     mkdir build && pushd build &&\
     cmake -DCMAKE_PREFIX_PATH=/opt/conda/lib/python3.6/site-packages/torch -DWITH_CUDA=${LIB_WITH_CUDA} .. &&\
-    make -j $(nproc) && mv *.so /workspace/ && popd &&\
+    make -j ${NPROC} && mv *.so /workspace/ && popd &&\
     popd
 
 RUN git clone https://github.com/rusty1s/pytorch_spline_conv.git
@@ -23,7 +25,7 @@ RUN pushd pytorch_spline_conv &&\
     pip install . &&\
     mkdir build && pushd build &&\
     cmake -DCMAKE_PREFIX_PATH=/opt/conda/lib/python3.6/site-packages/torch -DWITH_CUDA=${LIB_WITH_CUDA} .. &&\
-    make -j $(nproc) && mv *.so /workspace/ && popd &&\
+    make -j ${NPROC} && mv *.so /workspace/ && popd &&\
     popd
 
 RUN git clone https://github.com/rusty1s/pytorch_sparse.git
@@ -31,7 +33,7 @@ RUN pushd pytorch_sparse &&\
     pip install . &&\
     mkdir build && pushd build &&\
     cmake -DCMAKE_PREFIX_PATH=/opt/conda/lib/python3.6/site-packages/torch -DWITH_CUDA=${LIB_WITH_CUDA} .. &&\
-    make -j $(nproc) && mv *.so /workspace/ && popd &&\
+    make -j ${NPROC} && mv *.so /workspace/ && popd &&\
     popd
 
 RUN git clone https://github.com/rusty1s/pytorch_geometric.git
