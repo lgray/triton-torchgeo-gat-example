@@ -1,3 +1,5 @@
+ARG SERVERBASE=20.06-py3
+
 FROM nvcr.io/nvidia/pytorch:20.06-py3 AS builder
 
 ENV FORCE_CUDA=1
@@ -45,12 +47,19 @@ RUN pushd pytorch_geometric/examples/jit &&\
     python gat.py >> train.log &&\
     mv gat_test.pt /workspace/model.pt
 
-FROM alpine:latest
+FROM nvcr.io/nvidia/tritonserver:${SERVERBASE}
 
-RUN mkdir -p /artifacts
+ENV LD_LIBRARY_PATH="/opt/tritonserver/lib/pytorch:/usr/local/cuda/compat/lib:/usr/local/nvidia/lib:/usr/local/nvidia/lib64"
+ENV LD_PRELOAD="/torch_geometric/lib/libtorchscatter.so /torch_geometric/lib/libtorchsparse.so /torch_geometric/lib/libtorchcluster.so /torch_geometric/lib/libtorchsplineconv.so"
 
-COPY --from=builder /workspace/libtorchscatter.so /artifacts
-COPY --from=builder /workspace/libtorchsparse.so /artifacts
-COPY --from=builder /workspace/libtorchcluster.so /artifacts
-COPY --from=builder /workspace/libtorchsplineconv.so /artifacts
-COPY --from=builder /workspace/model.pt /artifacts/model.pt
+RUN mkdir -p /run/shm
+RUN mkdir -p /models
+
+RUN mkdir -p /torch_geometric/lib
+RUN mkdir -p /torch_geometric/examples/
+
+COPY --from=builder /workspace/libtorchscatter.so /torch_geometric/lib/
+COPY --from=builder /workspace/libtorchsparse.so /torch_geometric/lib/
+COPY --from=builder /workspace/libtorchcluster.so /torch_geometric/lib/
+COPY --from=builder /workspace/libtorchsplineconv.so /torch_geometric/lib/
+COPY --from=builder /workspace/model.pt /torch_geometric/examples/model.pt
