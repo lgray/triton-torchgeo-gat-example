@@ -12,7 +12,7 @@ done
 #docker build -t local/gat_local_test -f Dockerfile.local .
 
 docker run -d --name triton_artifacts \
-       lgray/tritonserver:20.06-py3-geometric
+       ${USER}/tritonserver:20.06-py3-geometric
 
 mkdir -p artifacts/models/gat_test/1
 
