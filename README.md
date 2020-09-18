@@ -36,6 +36,16 @@ Use:
 ./cleanup.sh # to clean up the docker containers and networks
 ```
 
+Generating and running using a singularity container:
+=====================================================
+```bash
+./build-images.sh # to build the various triton images
+./make-singularity.sh # to build the singularity images from the triton images
+./start-singularity.sh # to run the freshly made singularity containers in a test
+./cleanup-singularity.sh # to clean up the singularity containers
+```
+
+
 # How to substitute in your own model:
 (assuming your model training is separate from container generation)
 1) Train your model and then save it using TorchScript's jit. See [here](https://pytorch-geometric.readthedocs.io/en/latest/notes/jit.html) for details on how to tweak your Pytorch-Geometric model for torch scripting (it is very easy and backwards compatible with saved weights from previous trainings).
