@@ -38,11 +38,12 @@ Use:
 
 Generating and running using a singularity container:
 =====================================================
+Note: These instructions require docker to be available on the machine, but the singularity images can then be moved anywhere.
 ```bash
-./build-images.sh # to build the various triton images
-./make-singularity.sh # to build the singularity images from the triton images
-./start-singularity.sh # to run the freshly made singularity containers in a test
-./cleanup-singularity.sh # to clean up the singularity containers
+./build-images.sh # to build the triton containers in docker
+./make-singularity.sh # to build singularity triton containers from the docker triton containers
+./start-singularity.sh # to run the freshly made singularity triton containers in a test
+./cleanup-singularity.sh # to clean up the singularity triton containers
 ```
 
 
