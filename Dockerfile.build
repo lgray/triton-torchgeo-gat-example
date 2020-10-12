@@ -1,6 +1,6 @@
-ARG SERVERBASE=20.06-py3
+ARG SERVERBASE=20.09-py3
 
-FROM nvcr.io/nvidia/pytorch:20.06-py3 AS builder
+FROM nvcr.io/nvidia/pytorch:${SERVERBASE} AS builder
 
 ENV FORCE_CUDA=1
 ARG LIB_WITH_CUDA=ON
