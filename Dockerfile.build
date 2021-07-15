@@ -39,8 +39,6 @@ RUN pushd pytorch_sparse &&\
     popd
 
 RUN git clone https://github.com/rusty1s/pytorch_geometric.git
-
-RUN pip install llvmlite --ignore-installed
 RUN pushd pytorch_geometric && pip install -e . && popd
 
 RUN pushd pytorch_geometric/examples/jit &&\
@@ -50,7 +48,7 @@ RUN pushd pytorch_geometric/examples/jit &&\
 
 FROM nvcr.io/nvidia/tritonserver:${SERVERBASE}
 
-ENV LD_LIBRARY_PATH="/opt/tritonserver/lib/pytorch:/usr/local/cuda/compat/lib:/usr/local/nvidia/lib:/usr/local/nvidia/lib64"
+ENV LD_LIBRARY_PATH="/opt/tritonserver/backends/pytorch:/usr/local/cuda/compat/lib:/usr/local/nvidia/lib:/usr/local/nvidia/lib64"
 ENV LD_PRELOAD="/torch_geometric/lib/libtorchscatter.so /torch_geometric/lib/libtorchsparse.so /torch_geometric/lib/libtorchcluster.so /torch_geometric/lib/libtorchsplineconv.so"
 
 RUN mkdir -p /run/shm
